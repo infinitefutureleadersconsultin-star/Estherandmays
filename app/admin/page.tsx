@@ -23,11 +23,19 @@ import {
 import Link from 'next/link'
 import { useAuthStore } from '@/lib/store'
 import { logoutUser } from '@/lib/auth'
+import CreateProjectModal from './components/CreateProjectModal'
+import AddVendorModal from './components/AddVendorModal'
+import SendMessageModal from './components/SendMessageModal'
+import ProcessPaymentModal from './components/ProcessPaymentModal'
 
 export default function AdminDashboard() {
   const router = useRouter()
   const { user, setUser } = useAuthStore()
   const [loading, setLoading] = useState(true)
+  const [showCreateProject, setShowCreateProject] = useState(false)
+  const [showAddVendor, setShowAddVendor] = useState(false)
+  const [showSendMessage, setShowSendMessage] = useState(false)
+  const [showProcessPayment, setShowProcessPayment] = useState(false)
 
   useEffect(() => {
     if (!user) {
@@ -168,7 +176,7 @@ export default function AdminDashboard() {
               <div className="flex items-center justify-between mb-6">
                 <h2 className="text-xl font-bold text-slate-900">Projects</h2>
                 <button
-                  onClick={() => alert('Project creation feature coming soon! This will allow you to add new procurement opportunities and invite vendors.')}
+                  onClick={() => setShowCreateProject(true)}
                   className="flex items-center px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition"
                 >
                   <Plus className="h-4 w-4 mr-2" />
@@ -184,7 +192,7 @@ export default function AdminDashboard() {
                     Get started by creating your first procurement project
                   </p>
                   <button
-                    onClick={() => alert('Project creation feature coming soon!')}
+                    onClick={() => setShowCreateProject(true)}
                     className="inline-flex items-center px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition font-semibold"
                   >
                     <Plus className="h-5 w-5 mr-2" />
@@ -207,7 +215,7 @@ export default function AdminDashboard() {
               <h2 className="text-xl font-bold text-slate-900 mb-4">Quick Actions</h2>
               <div className="grid grid-cols-2 gap-4">
                 <button
-                  onClick={() => alert('Payment processing feature coming soon! This will integrate with Bill.com for ACH payments.')}
+                  onClick={() => setShowProcessPayment(true)}
                   className="flex items-center p-4 border-2 border-slate-200 rounded-lg hover:border-blue-500 hover:bg-blue-50 transition group"
                 >
                   <DollarSign className="h-5 w-5 text-slate-600 group-hover:text-blue-600 mr-3" />
@@ -216,7 +224,7 @@ export default function AdminDashboard() {
                   </span>
                 </button>
                 <button
-                  onClick={() => alert('Vendor onboarding feature coming soon! This will allow you to invite fulfillment partners and manage their profiles.')}
+                  onClick={() => setShowAddVendor(true)}
                   className="flex items-center p-4 border-2 border-slate-200 rounded-lg hover:border-blue-500 hover:bg-blue-50 transition group"
                 >
                   <Users className="h-5 w-5 text-slate-600 group-hover:text-blue-600 mr-3" />
@@ -225,7 +233,7 @@ export default function AdminDashboard() {
                   </span>
                 </button>
                 <button
-                  onClick={() => alert('Messaging feature coming soon! This will allow you to send updates and notifications to vendors via Resend.')}
+                  onClick={() => setShowSendMessage(true)}
                   className="flex items-center p-4 border-2 border-slate-200 rounded-lg hover:border-blue-500 hover:bg-blue-50 transition group"
                 >
                   <MessageSquare className="h-5 w-5 text-slate-600 group-hover:text-blue-600 mr-3" />
@@ -282,7 +290,7 @@ export default function AdminDashboard() {
               <p className="text-3xl font-bold mb-2">$0</p>
               <p className="text-blue-100 mb-4">No payments scheduled</p>
               <button
-                onClick={() => alert('Payment scheduling feature coming soon!')}
+                onClick={() => setShowProcessPayment(true)}
                 className="w-full bg-white text-blue-600 py-2 rounded-lg font-semibold hover:bg-blue-50 transition"
               >
                 Schedule Payments
@@ -291,6 +299,43 @@ export default function AdminDashboard() {
           </div>
         </div>
       </div>
+
+      {/* Modals */}
+      <CreateProjectModal
+        isOpen={showCreateProject}
+        onClose={() => setShowCreateProject(false)}
+        onSuccess={() => {
+          // Refresh data or update state
+          console.log('Project created successfully')
+        }}
+      />
+
+      <AddVendorModal
+        isOpen={showAddVendor}
+        onClose={() => setShowAddVendor(false)}
+        onSuccess={() => {
+          // Refresh vendor list
+          console.log('Vendor added successfully')
+        }}
+      />
+
+      <SendMessageModal
+        isOpen={showSendMessage}
+        onClose={() => setShowSendMessage(false)}
+        onSuccess={() => {
+          // Handle success
+          console.log('Message sent successfully')
+        }}
+      />
+
+      <ProcessPaymentModal
+        isOpen={showProcessPayment}
+        onClose={() => setShowProcessPayment(false)}
+        onSuccess={() => {
+          // Refresh payment data
+          console.log('Payment scheduled successfully')
+        }}
+      />
     </div>
   )
 }
