@@ -52,7 +52,7 @@ export default function SubcontractorPortal() {
 
   const contractInfo = {
     contractNumber: 'NC-ENV-001',
-    projectName: 'VA Medical Center - Environmental Services',
+    projectName: 'Client Facility - Environmental Services',
     totalAmount: 100000,
     paidToDate: 25000,
     remaining: 75000,
@@ -121,7 +121,7 @@ export default function SubcontractorPortal() {
           <div className="flex justify-between items-center h-16">
             <div className="flex items-center">
               <Building2 className="h-8 w-8 text-blue-600" />
-              <span className="ml-2 text-xl font-bold text-slate-900">Subcontractor Portal</span>
+              <span className="ml-2 text-xl font-bold text-slate-900">Vendor Portal</span>
             </div>
             <div className="flex items-center space-x-4">
               <button className="relative p-2 text-slate-600 hover:text-blue-600 transition">
@@ -133,7 +133,7 @@ export default function SubcontractorPortal() {
               <div className="flex items-center space-x-3">
                 <div className="text-right">
                   <p className="text-sm font-semibold text-slate-900">{user?.displayName}</p>
-                  <p className="text-xs text-slate-500">Subcontractor</p>
+                  <p className="text-xs text-slate-500">Fulfillment Partner</p>
                 </div>
                 <button
                   onClick={handleLogout}
@@ -158,7 +158,7 @@ export default function SubcontractorPortal() {
           <h1 className="text-3xl font-bold text-slate-900 mb-2">
             Welcome back, {user?.displayName}!
           </h1>
-          <p className="text-slate-600">Track your contracts and payments all in one place.</p>
+          <p className="text-slate-600">Track your projects and payments all in one place.</p>
         </motion.div>
 
         {/* Contract Overview */}
@@ -170,9 +170,9 @@ export default function SubcontractorPortal() {
         >
           <div className="flex items-start justify-between mb-6">
             <div>
-              <p className="text-blue-100 mb-1">Active Contract</p>
+              <p className="text-blue-100 mb-1">Active Project</p>
               <h2 className="text-2xl font-bold mb-1">{contractInfo.projectName}</h2>
-              <p className="text-blue-100">Contract #{contractInfo.contractNumber}</p>
+              <p className="text-blue-100">Project #{contractInfo.contractNumber}</p>
             </div>
             <span className="px-4 py-2 bg-green-500 rounded-full text-sm font-semibold">
               {contractInfo.status.toUpperCase()}
@@ -181,7 +181,7 @@ export default function SubcontractorPortal() {
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
             <div>
-              <p className="text-blue-100 text-sm mb-1">Total Contract Value</p>
+              <p className="text-blue-100 text-sm mb-1">Total Project Value</p>
               <p className="text-3xl font-bold">${contractInfo.totalAmount.toLocaleString()}</p>
             </div>
             <div>
@@ -314,7 +314,7 @@ export default function SubcontractorPortal() {
                 <button className="flex items-center p-4 border-2 border-slate-200 rounded-lg hover:border-blue-500 hover:bg-blue-50 transition group">
                   <Download className="h-5 w-5 text-slate-600 group-hover:text-blue-600 mr-3" />
                   <span className="font-semibold text-slate-700 group-hover:text-blue-600">
-                    Contract Copy
+                    Agreement Copy
                   </span>
                 </button>
                 <button className="flex items-center p-4 border-2 border-dashed border-slate-300 rounded-lg hover:border-blue-500 hover:bg-blue-50 transition group">

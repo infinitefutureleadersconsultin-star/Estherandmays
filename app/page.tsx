@@ -65,7 +65,7 @@ export default function Home() {
               </span>
             </h1>
             <p className="text-xl text-slate-600 mb-8 max-w-2xl mx-auto leading-relaxed">
-              We handle the contract side so you can focus on what matters. Streamlined communication, automated payments, and total transparency.
+              We represent organizations with significant purchasing needs, connecting qualified vendors with substantial fulfillment opportunities. Streamlined communication, automated payments, and total transparency.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link
@@ -97,7 +97,7 @@ export default function Home() {
             className="text-center mb-16"
           >
             <h2 className="text-4xl font-bold text-slate-900 mb-4">Everything You Need</h2>
-            <p className="text-xl text-slate-600">Powerful tools for seamless contract management</p>
+            <p className="text-xl text-slate-600">Powerful tools for seamless procurement coordination</p>
           </motion.div>
 
           <div className="grid md:grid-cols-3 gap-8">
@@ -105,7 +105,7 @@ export default function Home() {
               {
                 icon: MessageSquare,
                 title: 'Real-Time Communication',
-                description: 'AI-powered chat for each subcontractor. Send updates, scope changes, and payment notifications instantly.'
+                description: 'Dedicated communication channels for each fulfillment partner. Send updates, requirement changes, and payment notifications instantly.'
               },
               {
                 icon: DollarSign,
@@ -114,8 +114,8 @@ export default function Home() {
               },
               {
                 icon: FileText,
-                title: 'Contract Management',
-                description: 'Track every contract from award to completion. Payment schedules, margins, and deliverables in one dashboard.'
+                title: 'Project Coordination',
+                description: 'Track every procurement opportunity from start to finish. Payment schedules, margins, and deliverables in one dashboard.'
               },
               {
                 icon: Shield,
@@ -124,8 +124,8 @@ export default function Home() {
               },
               {
                 icon: Users,
-                title: 'Subcontractor Portals',
-                description: 'Each partner gets their own dashboard. See contract status, payment history, and upcoming milestones.'
+                title: 'Vendor Portals',
+                description: 'Each fulfillment partner gets their own dashboard. See project status, payment history, and upcoming milestones.'
               },
               {
                 icon: Clock,
@@ -168,10 +168,10 @@ export default function Home() {
 
           <div className="grid md:grid-cols-4 gap-8">
             {[
-              { number: '01', title: 'Contract Award', desc: 'Win a government contract. Enter details into the system.' },
-              { number: '02', title: 'Onboard Partners', desc: 'Invite subcontractors. They create accounts and submit documents.' },
-              { number: '03', title: 'Manage & Communicate', desc: 'Use AI chat to send updates. Track progress in real-time.' },
-              { number: '04', title: 'Process Payments', desc: 'Schedule payments via Bill.com. Subcontractors see status instantly.' },
+              { number: '01', title: 'Procurement Opportunity', desc: 'Receive client requirements and enter project details into the system.' },
+              { number: '02', title: 'Onboard Vendors', desc: 'Invite qualified fulfillment partners. They create accounts and submit documentation.' },
+              { number: '03', title: 'Manage & Communicate', desc: 'Send updates and track progress in real-time through dedicated channels.' },
+              { number: '04', title: 'Process Payments', desc: 'Schedule payments via Bill.com. Vendors see payment status instantly.' },
             ].map((step, index) => (
               <motion.div
                 key={index}
@@ -206,7 +206,7 @@ export default function Home() {
               Ready to Transform Your Workflow?
             </h2>
             <p className="text-xl text-blue-100 mb-8">
-              Join contractors who are modernizing their operations with our platform
+              Join vendors who are accessing substantial procurement opportunities through our platform
             </p>
             <Link
               href="/auth/signup"
