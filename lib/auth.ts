@@ -10,7 +10,7 @@ import { doc, setDoc, getDoc } from 'firebase/firestore'
 import { auth, db } from './firebase'
 import { User } from '@/types'
 
-const ADMIN_EMAIL = process.env.NEXT_PUBLIC_ADMIN_EMAIL || 'issiahmclean1999@gmail.com'
+const ADMIN_EMAIL = process.env.NEXT_PUBLIC_ADMIN_EMAIL || 'estherandmays@gmail.com'
 
 /**
  * Get initialized Auth instance
