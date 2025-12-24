@@ -14,11 +14,13 @@ const ADMIN_EMAIL = process.env.NEXT_PUBLIC_ADMIN_EMAIL || 'estherandmays@gmail.
 
 /**
  * Get initialized Auth instance
- * Throws error if Firebase Auth is not initialized (should never happen at runtime)
+ * Throws error if Firebase Auth is not initialized
  */
 function getAuthInstance(): Auth {
   if (!auth) {
-    throw new Error('Firebase Auth not initialized. This should not happen at runtime.')
+    throw new Error(
+      'Firebase is not configured. Please add your Firebase environment variables to Vercel and redeploy. See YOUR_ENV_VARS.txt for details.'
+    )
   }
   return auth
 }

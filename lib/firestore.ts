@@ -24,11 +24,13 @@ import {
 
 /**
  * Get initialized Firestore instance
- * Throws error if Firestore is not initialized (should never happen at runtime)
+ * Throws error if Firestore is not initialized
  */
 function getDbInstance(): Firestore {
   if (!db) {
-    throw new Error('Firestore not initialized. This should not happen at runtime.')
+    throw new Error(
+      'Firebase is not configured. Please add your Firebase environment variables to Vercel and redeploy. See YOUR_ENV_VARS.txt for details.'
+    )
   }
   return db
 }

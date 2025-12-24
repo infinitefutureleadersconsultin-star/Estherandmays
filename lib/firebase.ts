@@ -12,20 +12,28 @@ const firebaseConfig = {
   appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID,
 }
 
-// Check if we're in a build environment (skip Firebase initialization during build)
-const isBuildTime = typeof window === 'undefined' && !process.env.NEXT_PUBLIC_FIREBASE_API_KEY
+// Check if we should skip Firebase initialization
+// Skip if: 1) Build time, OR 2) Environment variables are missing
+const shouldSkipInit =
+  (typeof window === 'undefined' && !process.env.NEXT_PUBLIC_FIREBASE_API_KEY) ||
+  !process.env.NEXT_PUBLIC_FIREBASE_API_KEY
 
 let app: FirebaseApp | null = null
 let auth: Auth | null = null
 let db: Firestore | null = null
 let storage: FirebaseStorage | null = null
 
-// Only initialize Firebase if we're not in build mode
-if (!isBuildTime) {
-  app = getApps().length === 0 ? initializeApp(firebaseConfig) : getApps()[0]
-  auth = getAuth(app)
-  db = getFirestore(app)
-  storage = getStorage(app)
+// Only initialize Firebase if we have valid config
+if (!shouldSkipInit) {
+  try {
+    app = getApps().length === 0 ? initializeApp(firebaseConfig) : getApps()[0]
+    auth = getAuth(app)
+    db = getFirestore(app)
+    storage = getStorage(app)
+  } catch (error) {
+    console.error('Firebase initialization failed:', error)
+    // Keep all values as null so the app can still render
+  }
 }
 
 export { app, auth, db, storage }

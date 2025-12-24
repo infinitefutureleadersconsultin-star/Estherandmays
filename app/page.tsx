@@ -228,17 +228,19 @@ export default function Home() {
               Questions about how it works? We're here to help.
             </p>
             <div className="bg-white p-8 rounded-2xl shadow-lg">
-              <p className="text-slate-600 mb-4">
-                <strong className="text-slate-900">Issiah McLean</strong><br />
-                The Esther & Mays Group<br />
-                Charlotte, North Carolina
+              <p className="text-slate-600 mb-6">
+                <strong className="text-slate-900 text-2xl">The Esther & Mays Group</strong><br />
+                <span className="text-slate-500 mt-2">Charlotte, North Carolina</span>
+              </p>
+              <p className="text-slate-600 mb-6">
+                Have questions? Our team is here to help.
               </p>
               <a
-                href="mailto:issiahmclean1999@gmail.com"
-                className="inline-flex items-center text-blue-600 hover:text-blue-700 font-semibold"
+                href="mailto:estherandmays@gmail.com"
+                className="inline-flex items-center bg-blue-600 text-white px-8 py-4 rounded-lg font-semibold hover:bg-blue-700 transition shadow-lg shadow-blue-600/30"
               >
-                issiahmclean1999@gmail.com
-                <ArrowRight className="ml-2 h-4 w-4" />
+                Contact the Team
+                <ArrowRight className="ml-2 h-5 w-5" />
               </a>
             </div>
           </div>
