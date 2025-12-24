@@ -46,7 +46,7 @@ export async function sendPaymentNotification(
   contractName: string
 ) {
   try {
-    const { emailTemplates } = await import('@/app/api/email/route')
+    const { emailTemplates } = await import('@/lib/email-templates')
 
     const response = await fetch('/api/email', {
       method: 'POST',
