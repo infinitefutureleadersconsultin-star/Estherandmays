@@ -1,6 +1,6 @@
 {
-  "buildCommand": "echo 'No build required'",
-  "outputDirectory": ".",
+  "buildCommand": "npm run build",
+  "framework": "nextjs",
   "cleanUrls": true,
   "trailingSlash": false
 }
