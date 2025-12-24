@@ -18,7 +18,9 @@ import {
   Clock,
   AlertCircle,
   LogOut,
+  Bot,
 } from 'lucide-react'
+import Link from 'next/link'
 import { useAuthStore } from '@/lib/store'
 import { logoutUser } from '@/lib/auth'
 
@@ -278,12 +280,15 @@ export default function AdminDashboard() {
                     Send Update
                   </span>
                 </button>
-                <button className="flex items-center p-4 border-2 border-slate-200 rounded-lg hover:border-blue-500 hover:bg-blue-50 transition group">
-                  <FileText className="h-5 w-5 text-slate-600 group-hover:text-blue-600 mr-3" />
+                <Link
+                  href="/admin/automation"
+                  className="flex items-center p-4 border-2 border-slate-200 rounded-lg hover:border-blue-500 hover:bg-blue-50 transition group"
+                >
+                  <Bot className="h-5 w-5 text-slate-600 group-hover:text-blue-600 mr-3" />
                   <span className="font-semibold text-slate-700 group-hover:text-blue-600">
-                    Generate Report
+                    Automation Engine
                   </span>
-                </button>
+                </Link>
               </div>
             </div>
           </div>
