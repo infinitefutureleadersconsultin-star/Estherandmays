@@ -1,12 +1,25 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { Resend } from 'resend'
 
-const resend = new Resend(process.env.RESEND_API_KEY)
+// Lazy initialization - only create Resend client when actually needed (not during build)
+let resendClient: Resend | null = null
+
+function getResendClient(): Resend {
+  if (!resendClient) {
+    const apiKey = process.env.RESEND_API_KEY
+    if (!apiKey) {
+      throw new Error('RESEND_API_KEY environment variable is not set')
+    }
+    resendClient = new Resend(apiKey)
+  }
+  return resendClient
+}
 
 export async function POST(request: NextRequest) {
   try {
     const { to, subject, html } = await request.json()
 
+    const resend = getResendClient()
     const data = await resend.emails.send({
       from: 'The Esther & Mays Group <notifications@estherandmays.com>',
       to: to,
