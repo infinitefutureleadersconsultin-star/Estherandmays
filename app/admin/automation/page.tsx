@@ -54,14 +54,25 @@ export default function AutomationDashboard() {
         setRules(data.rules.map((rule: any) => ({
           ...rule,
           status: rule.enabled ? 'active' : 'paused',
-          lastRun: 'Just now',
-          executions: Math.floor(Math.random() * 100),
+          lastRun: rule.lastRun || 'Never',
+          executions: rule.executions || 0,
         })))
 
+        // Calculate real stats from actual data
+        const totalExecs = data.rules.reduce((sum: number, rule: any) => sum + (rule.executions || 0), 0)
+        const activeCount = data.rules.filter((r: any) => r.enabled).length
+
+        // Find most recent run time
+        const lastRunTimes = data.rules
+          .map((r: any) => r.lastRun)
+          .filter((t: any) => t && t !== 'Never')
+          .sort()
+        const mostRecentRun = lastRunTimes.length > 0 ? lastRunTimes[lastRunTimes.length - 1] : 'Never'
+
         setStats({
-          totalExecutions: 847,
-          activeRules: data.rules.filter((r: any) => r.enabled).length,
-          lastRunTime: 'Just now',
+          totalExecutions: totalExecs,
+          activeRules: activeCount,
+          lastRunTime: mostRecentRun,
           automationHealth: 100,
         })
       }
