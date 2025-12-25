@@ -21,6 +21,8 @@ export default function ProcessPaymentModal({ isOpen, onClose, onSuccess }: Proc
     amount: '',
     date: '',
     description: '',
+    paymentTerms: 'Net 30' as 'Net 15' | 'Net 30' | 'Net 60',
+    invoiceSubmittedDate: '',
   })
   const [loading, setLoading] = useState(false)
   const [loadingData, setLoadingData] = useState(false)
@@ -61,6 +63,16 @@ export default function ProcessPaymentModal({ isOpen, onClose, onSuccess }: Proc
     }
   }
 
+  // Calculate expected payment date based on invoice date + payment terms
+  const calculateExpectedPaymentDate = (invoiceDate: string, terms: string): Date | null => {
+    if (!invoiceDate) return null
+
+    const daysToAdd = terms === 'Net 15' ? 15 : terms === 'Net 30' ? 30 : 60
+    const date = new Date(invoiceDate)
+    date.setDate(date.getDate() + daysToAdd)
+    return date
+  }
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setError('')
@@ -77,6 +89,14 @@ export default function ProcessPaymentModal({ isOpen, onClose, onSuccess }: Proc
         throw new Error('Please select both project and vendor')
       }
 
+      // Calculate expected payment date if invoice date is provided
+      const expectedPaymentDate = formData.invoiceSubmittedDate
+        ? calculateExpectedPaymentDate(formData.invoiceSubmittedDate, formData.paymentTerms)
+        : null
+
+      // Determine status based on whether invoice has been submitted
+      const paymentStatus = formData.invoiceSubmittedDate ? 'pending_government' : 'scheduled'
+
       // Create payment record in Firestore
       const paymentData = {
         projectId: formData.projectId,
@@ -87,7 +107,10 @@ export default function ProcessPaymentModal({ isOpen, onClose, onSuccess }: Proc
         amount: parseFloat(formData.amount),
         scheduledDate: new Date(formData.date),
         description: formData.description,
-        status: 'scheduled',
+        paymentTerms: formData.paymentTerms,
+        invoiceSubmittedDate: formData.invoiceSubmittedDate ? new Date(formData.invoiceSubmittedDate) : null,
+        expectedPaymentDate: expectedPaymentDate,
+        status: paymentStatus,
         createdAt: new Date(),
       }
 
@@ -140,6 +163,8 @@ export default function ProcessPaymentModal({ isOpen, onClose, onSuccess }: Proc
           amount: '',
           date: '',
           description: '',
+          paymentTerms: 'Net 30',
+          invoiceSubmittedDate: '',
         })
         onSuccess()
         onClose()
@@ -283,6 +308,64 @@ export default function ProcessPaymentModal({ isOpen, onClose, onSuccess }: Proc
               className="w-full px-4 py-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition text-slate-900"
               placeholder="e.g., Month 1 Payment"
             />
+          </div>
+
+          {/* Net 15/30/60 Payment Terms Section */}
+          <div className="bg-blue-50 border-2 border-blue-200 rounded-lg p-4">
+            <h4 className="font-semibold text-slate-900 mb-3 flex items-center">
+              <DollarSign className="h-5 w-5 text-blue-600 mr-2" />
+              Government Payment Tracking
+            </h4>
+            <p className="text-sm text-slate-600 mb-4">
+              Track when you submit the invoice to the government and when payment is expected based on Net terms.
+            </p>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div>
+                <label className="block text-sm font-semibold text-slate-700 mb-2">
+                  Payment Terms
+                </label>
+                <select
+                  value={formData.paymentTerms}
+                  onChange={(e) => setFormData({ ...formData, paymentTerms: e.target.value as 'Net 15' | 'Net 30' | 'Net 60' })}
+                  className="w-full px-4 py-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition text-slate-900 bg-white"
+                >
+                  <option value="Net 15">Net 15 (15 days)</option>
+                  <option value="Net 30">Net 30 (30 days)</option>
+                  <option value="Net 60">Net 60 (60 days)</option>
+                </select>
+                <p className="text-xs text-slate-500 mt-1">Government payment processing time</p>
+              </div>
+
+              <div>
+                <label className="block text-sm font-semibold text-slate-700 mb-2">
+                  Invoice Submitted Date (Optional)
+                </label>
+                <input
+                  type="date"
+                  value={formData.invoiceSubmittedDate}
+                  onChange={(e) => setFormData({ ...formData, invoiceSubmittedDate: e.target.value })}
+                  className="w-full px-4 py-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition text-slate-900"
+                />
+                <p className="text-xs text-slate-500 mt-1">When invoice was sent to government</p>
+              </div>
+            </div>
+
+            {formData.invoiceSubmittedDate && (
+              <div className="mt-3 p-3 bg-green-50 border border-green-200 rounded-lg">
+                <p className="text-sm font-semibold text-green-700">
+                  Expected Payment Date: {' '}
+                  {calculateExpectedPaymentDate(formData.invoiceSubmittedDate, formData.paymentTerms)?.toLocaleDateString('en-US', {
+                    year: 'numeric',
+                    month: 'long',
+                    day: 'numeric'
+                  })}
+                </p>
+                <p className="text-xs text-green-600 mt-1">
+                  Based on {formData.paymentTerms} from invoice submission
+                </p>
+              </div>
+            )}
           </div>
 
           <div className="flex gap-4 pt-4">
